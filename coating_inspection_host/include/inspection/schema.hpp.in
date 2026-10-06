@@ -1,0 +1,14 @@
+/**
+ * 文件功能：数据库初始化 SQL 的编译期模板
+ *
+ * 职责说明：将 config/migrations/001_init.sql 嵌入 C++ 常量，供首次建库使用。
+ * 调用关系：CMake 替换 SCHEMA_SQL 占位符 → 构建目录中的 generated/inspection/schema.hpp → 仓库执行 schema_v1。
+ * 阅读提示：此文件是模板，应在这里维护注释；构建目录的生成头文件会被 CMake 重新生成。
+ */
+#pragma once
+namespace inspection {
+// 迁移 SQL 来自 config/migrations，避免文档、源文件和部署文件三处维护。
+// 模块：嵌入初始化脚本。R"SQL(...)SQL" 为原始字符串，SQL 的引号/换行无需逐个转义；
+// inline constexpr 允许多个源文件包含此头文件而不会产生重复定义。
+inline constexpr const char* schema_v1 = R"SQL(@SCHEMA_SQL@)SQL";
+}

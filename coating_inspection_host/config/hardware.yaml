@@ -1,0 +1,43 @@
+# 示例阈值只用于软件演示，不属于生产工艺标准。
+station_id: station01
+queue_capacity: 128
+measurement_timeout_ms: 30000
+instrument:
+  type: ble
+  device_name: N26Y06M0445
+  replay_file: replay.jsonl
+  loop: true
+  interval_ms: 1000
+workstation:
+  type: modbus
+  device: /dev/serial/by-id/REPLACE_WITH_ACTUAL_DEVICE
+  baudrate: 115200
+  parity: even
+  slave_id: 1
+  poll_ms: 100
+  heartbeat_ms: 200
+  business_health_ms: 500
+  response_timeout_ms: 150
+  command_timeout_ms: 1000
+  max_retries: 2
+database:
+  path: ../data/inspection.db
+  busy_timeout_ms: 100
+  min_free_mb: 64
+cloud:
+  adapter: disabled
+products:
+  demo5:
+    rule_version: demo-v1
+    required_points: 5
+    min_um: 100
+    max_um: 200
+    substrate: FE
+  demo1:
+    rule_version: demo-v1
+    required_points: 1
+    min_um: 100
+    max_um: 200
+    substrate: FE
+testing:
+  allow_controls: false

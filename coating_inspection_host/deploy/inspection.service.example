@@ -1,0 +1,22 @@
+# 复制前修改专用用户、绝对路径、串口和数据目录权限；本工程不会自动安装服务。
+[Unit]
+Description=Coating inspection Linux service
+After=bluetooth.service
+Wants=bluetooth.service
+
+[Service]
+Type=simple
+User=CHANGE_ME
+SupplementaryGroups=dialout
+ExecStart=/usr/local/bin/inspection_service --config /etc/coating-inspection/hardware.yaml
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=coating-inspection
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=1000
+
+[Install]
+WantedBy=multi-user.target
